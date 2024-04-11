@@ -5,7 +5,8 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:40184';
 
 const context =  [
-  "/weatherforecast",
+  "api/appointment",
+  "api/appointment/filters",
 ];
 
 module.exports = function(app) {
@@ -13,6 +14,7 @@ module.exports = function(app) {
     proxyTimeout: 10000,
     target: target,
     secure: false,
+    changeOrigin:true,
     headers: {
       Connection: 'Keep-Alive'
     }
