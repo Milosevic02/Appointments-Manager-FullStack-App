@@ -50,6 +50,47 @@ namespace AppointmentsManager.Controllers
             return appointment;
         }
 
+        [HttpPost("filters")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> FilteredAppointments(Filter filters)
+        {
+            if(_context.Appointments == null)
+            {
+                return NotFound("No Data Found");
+            }
+
+            List<Appointment> allData = await _context.Appointments.ToListAsync();
+
+            if (filters.All)
+            {
+                return allData;
+            }
+            if (filters.LevelOfImportance != null)
+            {
+                allData = allData.Where(e => e.LevelOfImportance == filters.LevelOfImportance).ToList();
+            }
+
+            if (filters.SpecifiedDate != null)
+            {
+                allData = allData.Where(e => e.Date == filters.SpecifiedDate).ToList();
+            }
+
+            if (filters.StartDate != null && filters.EndDate != null)
+            {
+                allData = allData.Where(e => e.Date >= filters.StartDate && e.Date <= filters.EndDate).ToList();
+            }
+
+            if (filters.SpecifiedTime != null)
+            {
+                allData = allData.Where(e => e.Time == filters.SpecifiedTime).ToList();
+            }
+
+            allData = allData.Where(e => e.Done == filters.Done).ToList();
+            allData = allData.Where(e => e.Deleted == filters.Deleted).ToList();
+
+            return allData;
+        }
+
+
         // PUT: api/appointment/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
