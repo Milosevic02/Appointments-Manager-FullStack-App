@@ -27,7 +27,7 @@ namespace AppointmentsManager.Controllers
         {
             if(_context.Appointments != null)
             {
-                return NotFound();
+                return NotFound("No Data Found!");
             }
             return await _context.Appointments.Where(e=>!e.Deleted && !e.Done).ToListAsync();
         }
@@ -64,6 +64,47 @@ namespace AppointmentsManager.Controllers
 
             try
             {
+                Appointment entry_ = await _context.Appointments.FirstAsync(e => e.ID == appointment.ID);
+
+                if (entry_.Title != appointment.Title)
+                {
+                    entry_.Title = appointment.Title;
+                }
+
+                if (entry_.Description != appointment.Description)
+                {
+                    entry_.Description = appointment.Description;
+                }
+
+                if (entry_.Address != appointment.Address)
+                {
+                    entry_.Address = appointment.Address;
+                }
+
+                if (entry_.LevelOfImportance != appointment.LevelOfImportance)
+                {
+                    entry_.LevelOfImportance = appointment.LevelOfImportance;
+                }
+
+                if (entry_.Done != appointment.Done)
+                {
+                    entry_.Done = appointment.Done;
+                }
+
+                if (entry_.Deleted != appointment.Deleted)
+                {
+                    entry_.Deleted = appointment.Deleted;
+                }
+
+                if (entry_.Date != appointment.Date)
+                {
+                    entry_.Date = appointment.Date;
+                }
+
+                if (entry_.Time != appointment.Time)
+                {
+                    entry_.Time = appointment.Time;
+                }
 
                 await _context.SaveChangesAsync();
             }
