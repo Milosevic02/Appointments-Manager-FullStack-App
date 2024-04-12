@@ -5,6 +5,7 @@ import New from "./New";
 import { Box, Typography, Tooltip, Fab, Alert, Stack,Item } from "@mui/material";
 import {Add as AddIcon} from "@mui/icons-material"
 import Filter from "./Filter";
+import Table from "./Table";
 const Home = () =>{
     return(
         <Box pt={3}>
@@ -26,9 +27,7 @@ const Home = () =>{
             </Tooltip>
             <Alert variant = "filled" severity="success">This is a success Alert.</Alert>
             <Filter pb={3}/>
-            <New/>
-            <Edit/>
-            <Delete/>
+            <Table/>
         </Box>
     )
 }
