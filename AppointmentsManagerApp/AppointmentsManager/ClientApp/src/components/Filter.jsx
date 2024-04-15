@@ -1,5 +1,6 @@
 import { Button, Stack, Typography, FormGroup, FormControlLabel, Checkbox, Autocomplete, Box, TextField } from "@mui/material";
 import React,{useState} from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -16,9 +17,9 @@ const Filter = () =>{
     return(
         <Stack alignItems={"center"} justifyContent={"space-around"} direction={"row"} pt={3} pl={5}>
             <Typography variant="h6">Filter:</Typography>
-            <Button variant="outlined" color="error" sx={{
+            <Button variant="outlined" startIcon={<DeleteIcon />} color="error" sx={{
                 height:"23px"
-            }}> Clear Filters</Button>
+            }}> Clear</Button>
             <FormGroup row>
                 <FormControlLabel value={"all"} control={<Checkbox/>}labelPlacement="top" label="All" />
                 <FormControlLabel value={"done"} control={<Checkbox/>}labelPlacement="top" label="Done" />
