@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import New from "./New";
@@ -6,7 +6,16 @@ import { Box, Typography, Tooltip, Fab, Alert, Stack,Item } from "@mui/material"
 import {Add as AddIcon} from "@mui/icons-material"
 import Filter from "./Filter";
 import Table from "./Table";
+import { testData } from "./Lib";
+import Appointment from "./Appointment";
 const Home = () =>{
+
+    const [dataList,setDataList] = useState([])
+
+    useEffect(()=>{
+        setDataList(testData)
+    },[])
+
     return(
         <Box pt={3}>
             <Typography variant="h3" pb={3} textAlign={"center"}>
@@ -27,7 +36,7 @@ const Home = () =>{
             </Tooltip>
             <Alert variant = "filled" severity="success">This is a success Alert.</Alert>
             <Filter pb={3}/>
-            <Table/>
+            <Table dataList={dataList}/>
         </Box>
     )
 }
