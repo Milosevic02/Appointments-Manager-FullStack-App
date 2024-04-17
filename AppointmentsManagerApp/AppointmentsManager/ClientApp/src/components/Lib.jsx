@@ -18,6 +18,16 @@ export const entry = {
     levelOfImportance: 2,
 }
 
+
+export function formatedDateToStr(d){
+    const nd = d ? new Date(d) : new Date()
+    const month_ = nd.getMonth() + 1;
+    const monthStr = month_ > 9 ? month_ : 0 + "" + month_;
+    const day_ = nd.getDate() > 9 ? nd.getDate() : 0 + "" + nd.getDate();
+    return nd.getFullYear() + "-" + monthStr + "-" + day_;
+}
+
+
 export function formatedTimeToStr(d) {
     const nd = d ?  new Date(d) : new Date();
     const hr_ = nd.getHours() < 9 ? 0 + '' + nd.getHours() : nd.getHours()
