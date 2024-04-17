@@ -2,7 +2,8 @@ import React from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import { Button,Box } from "@mui/material";
 import "../style/table.css";
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const columns = [
     { field: 'id', headerName: '#', width: 70, align: "center" },
@@ -38,6 +39,7 @@ const columns = [
                 <Button
                     variant="contained"
                     color="warning"
+                    startIcon={<EditIcon />}
                 >Edit</Button>
             )
         }
@@ -47,6 +49,7 @@ const columns = [
         renderCell: () => {
             return (
                 <Button
+                    startIcon={<DeleteIcon />}
                     variant="contained"
                     color="error"
                 >Delete</Button>
