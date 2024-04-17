@@ -37,6 +37,7 @@ const columns = [
         renderCell: () => {
             return (
                 <Button
+                    //onClick={e=>setOpenEditModal(true)}
                     variant="contained"
                     color="warning"
                     startIcon={<EditIcon />}
@@ -59,7 +60,7 @@ const columns = [
 ];
 
 
-const Table = ({ dataList }) => {
+const Table = ({ dataList,setOpenEditModal }) => {
     const getRowClassName = (params) => {
         let importance = "";
         let level = String(params.row.LevelOfImportance);
