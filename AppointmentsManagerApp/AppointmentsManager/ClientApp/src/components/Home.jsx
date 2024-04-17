@@ -8,7 +8,7 @@ import Table from "./Table";
 import { testData } from "./Lib";
 import Appointment from "./Appointment";
 const Home = () =>{
-
+    const [openEditModal,setOpenEditModal] = useState([])
     const [dataList,setDataList] = useState([])
 
     useEffect(()=>{
@@ -25,8 +25,9 @@ const Home = () =>{
             </Typography>
             <Alert variant = "filled" severity="success">This is a success Alert.</Alert>
             <Filter pb={3}/>
-            <Table dataList={dataList}/>
+            <Table dataList={dataList} setOpenEditModal={setOpenEditModal} />
             <New/>
+            <Edit setOpenEditModal={setOpenEditModal}  openEditModal={openEditModal}/>
         </Box>
     )
 }
