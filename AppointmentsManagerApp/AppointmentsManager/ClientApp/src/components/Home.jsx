@@ -8,7 +8,7 @@ import Table from "./Table";
 import { testData } from "./Lib";
 import Appointment from "./Appointment";
 const Home = () =>{
-    const [openEditModal,setOpenEditModal] = useState([])
+    const [openEditModal,setOpenEditModal] = useState(false)
     const [dataList,setDataList] = useState([])
 
     useEffect(()=>{
