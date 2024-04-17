@@ -1,12 +1,11 @@
 import { Button, Stack, Typography, FormGroup, FormControlLabel, Checkbox, Autocomplete, Box, TextField } from "@mui/material";
 import React,{useState} from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from "@mui/x-date-pickers";
-
+import ClearIcon from '@mui/icons-material/Clear';
 const Filter = () =>{
     const periods = ["Default","Today","This Week","Last Week"]
     const importances = ["All","Very High","High","Medium","Normal","Low","Very Low"]
@@ -17,7 +16,7 @@ const Filter = () =>{
     return(
         <Stack alignItems={"center"} justifyContent={"space-around"} direction={"row"} pt={3} pl={5}>
             <Typography variant="h6">Filter:</Typography>
-            <Button variant="outlined" startIcon={<DeleteIcon />} color="error" sx={{
+            <Button variant="outlined" startIcon={<ClearIcon />} color="error" sx={{
                 height:"23px"
             }}> Clear</Button>
             <FormGroup row>
