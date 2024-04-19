@@ -27,7 +27,6 @@ const Home = () =>{
             <Filter pb={3}/>
             <Table dataList={dataList} setOpenEditModal={setOpenEditModal} />
             <New/>
-            <Edit setOpenEditModal={setOpenEditModal}  openEditModal={openEditModal}/>
         </Box>
     )
 }
