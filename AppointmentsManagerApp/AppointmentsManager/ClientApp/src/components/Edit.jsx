@@ -10,10 +10,10 @@ const StyledModal = styled(Modal)({
     alignItems:"center",
     justifyContent:"center"
 })
-const Edit = ({openEditModal,setOpenEditModal}) =>{
+const Edit = ({openEdit,setOpenEdit}) =>{
     return(
         <StyledModal
-                open={openEditModal}
+                open={openEdit}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 >
@@ -45,7 +45,7 @@ const Edit = ({openEditModal,setOpenEditModal}) =>{
                         <input type="time" id="Time_n" name="time" defaultValue={formatedTimeToStr()}/>
                         </Stack>
                         <Stack direction={"row"} sx={{ml:"20px",mr:"20px",mt:"30px" ,alignItems:"center", justifyContent:"space-between"}}>
-                            <Button startIcon={<CloseIcon />} onClick={e=>setOpenEditModal(false)} variant="contained" color="error"sx={{width:"100px"}}>
+                            <Button startIcon={<CloseIcon />} onClick={e=>setOpenEdit(false)} variant="contained" color="error"sx={{width:"100px"}}>
                                 Close
                             </Button>
                             <Button startIcon={<AddCircleIcon />} variant="contained" color="success" sx={{width:"100px"}}>
