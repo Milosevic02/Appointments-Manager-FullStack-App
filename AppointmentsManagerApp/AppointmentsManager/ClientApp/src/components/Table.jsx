@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import { Button,Box } from "@mui/material";
 import "../style/table.css";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Edit from "./Edit";
+
 
 const columns = [
     { field: 'id', headerName: '#', width: 70, align: "center" },
@@ -34,11 +36,11 @@ const columns = [
     { field: 'Address', headerName: 'Address', width: 200 },
     {
         field: 'Edit', headerName: 'Edit', width: 130,
-        renderCell: () => {
+        renderCell: ({row}) => {
             return (
                 <Button
-                    //onClick={e=>setOpenEditModal(true)}
-                    variant="contained"
+                onClick={() => row.onEditClick(row)}
+                variant="contained"
                     color="warning"
                     startIcon={<EditIcon />}
                 >Edit</Button>
@@ -60,7 +62,9 @@ const columns = [
 ];
 
 
-const Table = ({ dataList,setOpenEditModal }) => {
+const Table = ({ dataList }) => {
+    const [openEdit, setOpenEdit] = useState(false);
+
     const getRowClassName = (params) => {
         let importance = "";
         let level = String(params.row.LevelOfImportance);
@@ -96,9 +100,10 @@ const Table = ({ dataList,setOpenEditModal }) => {
         }
     };
     return (
+        
         <div style={{ height: 400, width: '100%', paddingLeft: 10 }}>
             <DataGrid
-                rows={dataList}
+                rows={dataList.map(row => ({ ...row, onEditClick: setOpenEdit }))} // Pass setOpenEdit as onEditClick to each row
                 columns={columns}
                 getRowClassName={getRowClassName}
                 initialState={{
@@ -108,7 +113,9 @@ const Table = ({ dataList,setOpenEditModal }) => {
                 }}
                 pageSizeOptions={[5, 10]}
             />
+            <Edit openEdit = {openEdit} setOpenEdit = {setOpenEdit}/>
         </div>
+        
     )
 }
 
