@@ -1,5 +1,5 @@
 import { Box, Fab, Modal, Stack, Button, Tooltip, Typography, styled } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Add as AddIcon} from "@mui/icons-material"
 import {formatedDateToStr,formatedTimeToStr} from "./Lib"
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,7 +10,10 @@ const StyledModal = styled(Modal)({
     alignItems:"center",
     justifyContent:"center"
 })
-const Edit = ({openEdit,setOpenEdit}) =>{
+const Edit = ({openEdit,setOpenEdit,stateListener}) =>{
+    useEffect(()=>{
+        console.log("Edit-Component")
+    },[stateListener])
     return(
         <StyledModal
                 open={openEdit}
