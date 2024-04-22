@@ -1,7 +1,7 @@
 import { Box, Fab, Modal, Stack, Button, Tooltip, Typography, styled } from "@mui/material";
 import React, { useState } from "react";
 import {Add as AddIcon} from "@mui/icons-material"
-import {entry, formatedDateToStr,formatedTimeToStr} from "./Lib"
+import {entry, formatedDateToStr,formatedTimeToStr, postAppointment} from "./Lib"
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 const StyledModal = styled(Modal)({
@@ -42,6 +42,15 @@ const New = () =>{
 
         entry[name_] = v_
     }
+
+    const postApp = ()=>{
+        postAppointment(entry).then(r=>{
+            console.log(r)
+        }).catch(e=>console.log("Error happened at positing new app:",e))
+
+        setOpen(false)
+    }
+
     const [open,setOpen]=useState(false)
     const handleClose = () => {
         setOpen(false);
@@ -105,7 +114,7 @@ const New = () =>{
                             <Button startIcon={<CloseIcon />} onClick={handleClose} variant="contained" color="error"sx={{width:"100px"}}>
                                 Close
                             </Button>
-                            <Button startIcon={<AddCircleIcon />} variant="contained" color="success" sx={{width:"100px"}}>
+                            <Button startIcon={<AddCircleIcon />} onClick={postApp} variant="contained" color="success" sx={{width:"100px"}}>
                                 Add
                             </Button>
                         </Stack>
