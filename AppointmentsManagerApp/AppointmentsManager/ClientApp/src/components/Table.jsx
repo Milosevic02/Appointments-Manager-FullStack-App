@@ -10,18 +10,18 @@ import Delete from "./Delete";
 
 const columns = [
     { field: 'id', headerName: '#', width: 70, align: "center" },
-    { field: 'Title', headerName: 'Title', width: 130 },
-    { field: 'Description', headerName: 'Description', width: 200 },
+    { field: 'title', headerName: 'Title', width: 130 },
+    { field: 'description', headerName: 'Description', width: 200 },
     {
-        field: 'LevelOfImportance',
+        field: 'levelOfImportance',
         headerName: 'Importance',
         width: 130,
         align: "center",
         renderCell: (params) => {
             let bgColor = ''; // Initialize background color
-            bgColor = params.row.LevelOfImportance === "Very Low" ? 'green' :
-                params.row.LevelOfImportance === "High" ? 'gold' :
-                params.row.LevelOfImportance === "Very High" ? 'red' :
+            bgColor = params.row.levelOfImportance === "Very Low" ? 'green' :
+                params.row.levelOfImportance === "High" ? 'gold' :
+                params.row.levelOfImportance === "Very High" ? 'red' :
                      '';
             return (
                 <Box>
@@ -32,9 +32,9 @@ const columns = [
                 
             );
         }
-    },    { field: 'Date', headerName: 'Date', width: 150 },
-    { field: 'Time', headerName: 'Time', width: 100, align: "center" },
-    { field: 'Address', headerName: 'Address', width: 200 },
+    },    { field: 'date', headerName: 'Date', width: 170 },
+    { field: 'time', headerName: 'Time', width: 100, align: "center" },
+    { field: 'address', headerName: 'Address', width: 200 },
     {
         field: 'Edit', headerName: 'Edit', width: 130,
         renderCell: ({row}) => {
@@ -63,38 +63,46 @@ const columns = [
     },
 ];
 
+const SplitDate = (param) =>{
+    let split_date = String(param).split("T");
+    let only_date = split_date[0];
+    return only_date;
+}
+
+const ImportanceToString = (param) =>{
+    let importance = "";
+    let level = String(param);
+    switch (level) {
+        case '0':
+            importance = "Very Low";
+            break;
+        case '1':
+            importance = "Low";
+            break;
+        case '2':
+            importance = "Normal";
+            break;
+        case '3':
+            importance = "Medium";
+            break;
+        case '4':
+            importance = "High";
+            break;
+        case '5':
+            importance = "Very High";
+            break;
+        default:
+            importance = level;
+    }
+    return importance;
+}
 
 const Table = ({ dataList }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
-
-
     const getRowClassName = (params) => {
-        let importance = "";
-        let level = String(params.row.LevelOfImportance);
-        switch (level) {
-            case '0':
-                importance = "Very Low";
-                break;
-            case '1':
-                importance = "Low";
-                break;
-            case '2':
-                importance = "Normal";
-                break;
-            case '3':
-                importance = "Medium";
-                break;
-            case '4':
-                importance = "High";
-                break;
-            case '5':
-                importance = "Very High";
-                break;
-            default:
-                importance = level;
-        }
-        params.row.LevelOfImportance = importance;
+        params.row.date = SplitDate(String(params.row.date));
+        params.row.levelOfImportance = ImportanceToString(params.row.levelOfImportance);
         if (params.row.deleted) {
             return 'deleted-row';
         } else if (params.row.done) {
