@@ -83,6 +83,19 @@ export async function updateAppointment(updateApp){
     return res
 }
 
+export async function deleteAppointment(id){
+    const res = await fetch(url + "/" + id,{
+        method:"DELETE"
+    })
+
+    if(!res.ok){
+        console.log("It sucked at deleting appointment: ", res)
+        //IZBACI ALERT
+        return{msg:res}
+    }
+    return res
+}
+
 export function formatedDateToStr(d){
     const nd = d ? new Date(d) : new Date()
     const month_ = nd.getMonth() + 1;
