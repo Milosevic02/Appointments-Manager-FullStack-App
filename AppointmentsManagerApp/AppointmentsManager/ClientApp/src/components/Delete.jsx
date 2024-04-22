@@ -7,16 +7,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useEffect } from 'react';
+import { activeId, deleteAppointment } from './Lib';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
 const Delete = ({openDelete,setOpenDelete,stateListener}) =>{
-    const handleClickOpen = () => {
-      setOpenDelete(true);
-    };
 
+    const deleteApp = () => {
+      deleteAppointment(activeId.id).then(r=>console.log("Deleted successfully:",r))
+      .catch(e=>console.log("Could not delete the appointment:",e))
+      setOpenDelete(false)
+    }
     useEffect(()=>{
       console.log("Delete-Component")
     },[stateListener])
@@ -41,7 +44,7 @@ const Delete = ({openDelete,setOpenDelete,stateListener}) =>{
             </DialogContent>
             <DialogActions>
             <Button onClick={handleClose}>Abort</Button>
-            <Button onClick={handleClose}>Sure</Button>
+            <Button onClick={deleteApp}>Sure</Button>
             </DialogActions>
         </Dialog>
         </React.Fragment>
