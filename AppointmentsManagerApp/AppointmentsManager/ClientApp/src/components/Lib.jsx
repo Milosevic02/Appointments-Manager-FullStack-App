@@ -30,6 +30,9 @@ export const filter = {
     SpecifiedTime: null
 };
 
+export const activeId = {
+    id:0
+}
 export async function getDefault(){
     const res = await fetch(url)
 
