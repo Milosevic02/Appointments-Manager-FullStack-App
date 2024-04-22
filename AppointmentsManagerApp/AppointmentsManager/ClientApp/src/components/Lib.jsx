@@ -65,6 +65,24 @@ export async function postAppointment(newApp){
     
 }
 
+
+export async function updateAppointment(updateApp){
+    const res = await fetch(url + "/" + updateApp.id,{
+        method:"PUT",
+        body:JSON.stringify(updateApp),
+        headers:{
+            "content-type": "application/json"
+        }
+    })
+
+    if(!res.ok){
+        console.log("It sucked at updating appointment: ", res)
+        //IZBACI ALERT
+        return{msg:res}
+    }
+    return res
+}
+
 export function formatedDateToStr(d){
     const nd = d ? new Date(d) : new Date()
     const month_ = nd.getMonth() + 1;
