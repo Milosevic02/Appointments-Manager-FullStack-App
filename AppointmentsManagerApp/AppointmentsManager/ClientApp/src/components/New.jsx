@@ -45,7 +45,7 @@ const New = (props) =>{
 
     const postApp = ()=>{
         postAppointment(entry).then(r=>{
-            console.log(r)
+            console.log("Created successfully: ",r)
             props.refreshApp(Math.random() * 125 * Math.random())
         }).catch(e=>console.log("Error happened at positing new app:",e))
 
