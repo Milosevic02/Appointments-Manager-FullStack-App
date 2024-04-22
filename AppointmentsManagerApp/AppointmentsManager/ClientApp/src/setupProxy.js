@@ -9,6 +9,7 @@ const context =  [
   "api/appointment/filters",
 ];
 
+console.log("\nThe Target is: ",target)
 module.exports = function(app) {
   const appProxy = createProxyMiddleware(context, {
     proxyTimeout: 10000,
