@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Edit from "./Edit";
 import Delete from "./Delete";
+import { activeId, entry } from "./Lib";
 
 
 const columns = [
@@ -97,9 +98,24 @@ const ImportanceToString = (param) =>{
     return importance;
 }
 
+
+
 const Table = ({ dataList }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
+    const [stateListener, setStateListener] = useState(0);
+
+    const handlingDelete = (id) =>{
+        activeId.id = id
+        setStateListener(Math.random() * 548 * Math.random())
+        setOpenDelete(true)
+    }
+    
+    const handlingEdit = (row)=>{
+        Object.assign(entry,row)
+        setStateListener(Math.random() * 548 * Math.random())
+        setOpenEdit(true)
+    }
     const getRowClassName = (params) => {
         params.row.date = SplitDate(String(params.row.date));
         params.row.levelOfImportance = ImportanceToString(params.row.levelOfImportance);
@@ -125,8 +141,8 @@ const Table = ({ dataList }) => {
                 }}
                 pageSizeOptions={[5, 10]}
             />
-            <Edit openEdit = {openEdit} setOpenEdit = {setOpenEdit}/>
-            <Delete openDelete = {openDelete} setOpenDelete = {setOpenDelete}/>
+            <Edit stateListener = {stateListener} openEdit = {openEdit} setOpenEdit = {setOpenEdit}/>
+            <Delete stateListener = {stateListener} openDelete = {openDelete} setOpenDelete = {setOpenDelete}/>
         </div>
         
     )
