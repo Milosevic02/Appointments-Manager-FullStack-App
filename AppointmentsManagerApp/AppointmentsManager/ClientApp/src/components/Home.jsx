@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Edit from "./Edit";
-import Delete from "./Delete";
 import New from "./New";
 import { Box, Typography, Tooltip, Fab, Alert, Stack,Item } from "@mui/material";
 import Filter from "./Filter";
