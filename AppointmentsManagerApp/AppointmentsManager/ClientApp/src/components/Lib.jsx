@@ -43,6 +43,24 @@ export async function getDefault(){
     
 }
 
+export async function postAppointment(newApp){
+    const res = await fetch(url,{
+        method:"POST",
+        body:JSON.stringify(newApp),
+        headers:{
+            "content-type":"application/json"
+        }
+    })
+
+    if(!res.ok){
+        console.log("It sucked at creating new appointment: ", res)
+        //IZBACI ALERT
+        return {msg:res}
+    }
+    const result = await res.json()
+    return result
+    
+}
 
 export function formatedDateToStr(d){
     const nd = d ? new Date(d) : new Date()
