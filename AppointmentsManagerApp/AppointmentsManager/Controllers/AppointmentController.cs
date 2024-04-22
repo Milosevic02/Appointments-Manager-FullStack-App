@@ -25,7 +25,7 @@ namespace AppointmentsManager.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            if(_context.Appointments != null)
+            if(_context.Appointments == null)
             {
                 return NotFound("No Data Found!");
             }
