@@ -6,6 +6,7 @@ export const testData = [
 
 ]
 
+const url = "api/appointment"
 
 export const entry = {
     title: "Test title",
@@ -16,6 +17,30 @@ export const entry = {
     done: false,
     deleted: false,
     levelOfImportance: 2,
+}
+
+export const filter = {
+    LevelOfImportance: null,
+    All: false,
+    Deleted: false,
+    Done: false,
+    StartDate: null,
+    EndDate: null,
+    SpecifiedDate: null,
+    SpecifiedTime: null
+};
+
+export async function getDefault(){
+    const res = await fetch(url)
+
+    if(!res.ok && res.status !== 200){
+        console.log("It sucked at getting default data: ", res)
+        //IZBACI ALERT
+        return []
+    }
+    const result = await res.json()
+    return result
+    
 }
 
 
