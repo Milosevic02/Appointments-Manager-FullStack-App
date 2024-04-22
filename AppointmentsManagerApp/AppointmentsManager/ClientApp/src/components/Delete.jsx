@@ -11,32 +11,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const Delete = () =>{
-    const [open, setOpen] = React.useState(true);
-
+const Delete = ({openDelete,setOpenDelete}) =>{
     const handleClickOpen = () => {
-      setOpen(true);
+      setOpenDelete(true);
     };
   
     const handleClose = () => {
-      setOpen(false);
+      setOpenDelete(false);
     };
     return(
     <React.Fragment>
-        <Button variant="outlined" onClick={handleClickOpen}>
-            Slide in alert dialog
-        </Button>
         <Dialog
-            open={open}
+            open={openDelete}
             TransitionComponent={Transition}
             keepMounted
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
         >
-            <DialogTitle>{"Are you sure want to delete Appointmnet"}</DialogTitle>
+            <DialogTitle>{"Warning deleting the Appointment"}</DialogTitle>
             <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-                If you delete this Appointment you cant restore it
+                Are you sure you want to delete the Appointmnet?
             </DialogContentText>
             </DialogContent>
             <DialogActions>
