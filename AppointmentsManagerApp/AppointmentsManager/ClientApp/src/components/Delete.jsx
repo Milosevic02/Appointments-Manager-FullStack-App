@@ -6,15 +6,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import { useEffect } from 'react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const Delete = ({openDelete,setOpenDelete}) =>{
+const Delete = ({openDelete,setOpenDelete,stateListener}) =>{
     const handleClickOpen = () => {
       setOpenDelete(true);
     };
+
+    useEffect(()=>{
+      console.log("Delete-Component")
+    },[stateListener])
   
     const handleClose = () => {
       setOpenDelete(false);
