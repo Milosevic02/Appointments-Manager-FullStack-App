@@ -5,14 +5,14 @@ import New from "./New";
 import { Box, Typography, Tooltip, Fab, Alert, Stack,Item } from "@mui/material";
 import Filter from "./Filter";
 import Table from "./Table";
-import { testData } from "./Lib";
-import Appointment from "./Appointment";
+import { getDefault, testData } from "./Lib";
 const Home = () =>{
-    const [openEditModal,setOpenEditModal] = useState(false)
     const [dataList,setDataList] = useState([])
 
     useEffect(()=>{
-        setDataList(testData)
+        getDefault().then(data=>{
+            setDataList(data)
+        })
     },[])
 
     return(
@@ -25,7 +25,7 @@ const Home = () =>{
             </Typography>
             <Alert variant = "filled" severity="success">This is a success Alert.</Alert>
             <Filter pb={3}/>
-            <Table dataList={dataList} setOpenEditModal={setOpenEditModal} />
+            <Table dataList={dataList} />
             <New/>
         </Box>
     )
