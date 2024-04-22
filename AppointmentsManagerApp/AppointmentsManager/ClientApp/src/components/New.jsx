@@ -11,7 +11,7 @@ const StyledModal = styled(Modal)({
 })
 
 
-const New = () =>{
+const New = (props) =>{
     const [titleLength, setTitleLength] = useState(0)
     const [desLength, setDesLength] = useState(0)
     const [addrLength, setAddrLength] = useState(0)
@@ -46,6 +46,7 @@ const New = () =>{
     const postApp = ()=>{
         postAppointment(entry).then(r=>{
             console.log(r)
+            props.refreshApp(Math.random() * 125 * Math.random())
         }).catch(e=>console.log("Error happened at positing new app:",e))
 
         setOpen(false)
