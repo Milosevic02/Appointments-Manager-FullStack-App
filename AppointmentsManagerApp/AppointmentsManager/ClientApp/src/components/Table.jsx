@@ -5,6 +5,7 @@ import "../style/table.css";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Edit from "./Edit";
+import Delete from "./Delete";
 
 
 const columns = [
@@ -49,9 +50,10 @@ const columns = [
     },
     {
         field: 'Delete', headerName: 'Delete', width: 130,
-        renderCell: () => {
+        renderCell: ({row}) => {
             return (
                 <Button
+                    onClick={()=>row.onDeleteClick(row)}
                     startIcon={<DeleteIcon />}
                     variant="contained"
                     color="error"
@@ -64,6 +66,8 @@ const columns = [
 
 const Table = ({ dataList }) => {
     const [openEdit, setOpenEdit] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
+
 
     const getRowClassName = (params) => {
         let importance = "";
@@ -103,7 +107,7 @@ const Table = ({ dataList }) => {
         
         <div style={{ height: 400, width: '100%', paddingLeft: 10 }}>
             <DataGrid
-                rows={dataList.map(row => ({ ...row, onEditClick: setOpenEdit }))} // Pass setOpenEdit as onEditClick to each row
+                rows={dataList.map(row => ({ ...row, onEditClick: setOpenEdit,onDeleteClick:setOpenDelete }))} // Pass setOpenEdit as onEditClick to each row
                 columns={columns}
                 getRowClassName={getRowClassName}
                 initialState={{
@@ -114,6 +118,7 @@ const Table = ({ dataList }) => {
                 pageSizeOptions={[5, 10]}
             />
             <Edit openEdit = {openEdit} setOpenEdit = {setOpenEdit}/>
+            <Delete openDelete = {openDelete} setOpenDelete = {setOpenDelete}/>
         </div>
         
     )
