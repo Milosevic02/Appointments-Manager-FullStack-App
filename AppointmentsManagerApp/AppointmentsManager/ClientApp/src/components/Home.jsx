@@ -25,7 +25,7 @@ const Home = () =>{
             </Typography>
             <Alert variant = "filled" severity="success">This is a success Alert.</Alert>
             <Filter pb={3}/>
-            <Table dataList={dataList} />
+            <Table dataList={dataList} refreshApp={setRefreshData} />
             <New refreshApp={setRefreshData}/>
         </Box>
     )
