@@ -8,6 +8,7 @@ import { TimePicker } from "@mui/x-date-pickers";
 import ClearIcon from '@mui/icons-material/Clear';
 import { filter, getAppointments } from "./Lib";
 const Filter = ({setDataList}) =>{
+
     const filterApp = (e) => {
         let name_ = e.target.name;
         let v_ = e.target.value;
@@ -15,6 +16,17 @@ const Filter = ({setDataList}) =>{
         if (name_ === "All" || name_ === "Done" || name_ === "Deleted") {
           v_ = e.target.checked;
           filter[name_] = v_;
+        }
+
+        if (name_ === "All" && v_) {
+            filter["Done"] = false;
+            filter["Deleted"] = false;
+        } else if (name_ === "Done" && v_) {
+            filter["All"] = false;
+            filter["Deleted"] = false;
+        } else if (name_ === "Deleted" && v_) {
+            filter["All"] = false;
+            filter["Done"] = false;
         }
     
         if (name_ === "period") {
@@ -79,19 +91,20 @@ const Filter = ({setDataList}) =>{
     return(
         <Stack alignItems={"center"} justifyContent={"space-around"} direction={"row"} pt={3} pl={5}>
             <Typography variant="h6">Filter:</Typography>
-            <Button variant="outlined" startIcon={<ClearIcon />} color="error" sx={{
+            <Button onClick={()=> window.location.reload()} variant="outlined" startIcon={<ClearIcon />} color="error" sx={{
                 height:"23px"
             }}> Clear</Button>
             <FormGroup row>
-                <FormControlLabel onChange={filterApp} value={"all"} control={<Checkbox/>}labelPlacement="top" label="All"  />
-                <FormControlLabel onChange={filterApp} value={"done"} control={<Checkbox/>}labelPlacement="top" label="Done" />
-                <FormControlLabel onChange={filterApp} value={"delete"} control={<Checkbox/>}labelPlacement="top" label="Deleted" />
+                <FormControlLabel onChange={filterApp} value={"all"} control={<Checkbox/>}labelPlacement="top" label="All" name="All" />
+                <FormControlLabel onChange={filterApp} value={"done"} control={<Checkbox/>}labelPlacement="top" label="Done" name = "Done" />
+                <FormControlLabel onChange={filterApp} value={"delete"} control={<Checkbox/>}labelPlacement="top" label="Deleted" name="Deleted"/>
             </FormGroup>
             <Autocomplete
     value={value}
+    name="period"
     onChange={(event, newValue) => {
         setValue(newValue);
-        filterApp(newValue); // Call filterApp with newValue
+        filterApp(event); // Call filterApp with event
     }}
     inputValue={inputValue}
     onInputChange={(event, newInputValue) => {
@@ -107,19 +120,20 @@ const Filter = ({setDataList}) =>{
     <DemoContainer sx={{width:200}} components={['DatePicker']}>
         <DatePicker
             label="Date picker"
+            name="SpecifiedDate"
             onChange={(newValue) => {
-                filterApp(newValue); // Call filterApp with newValue
+                filterApp({target: {name: 'SpecifiedDate', value: newValue}}); // Call filterApp with event-like object
             }}
         />
     </DemoContainer>
 </LocalizationProvider>
 
-<LocalizationProvider dateAdapter={AdapterDayjs}>
-    <DemoContainer sx={{width:200}} components={['TimePicker']}>
+<LocalizationProvider  dateAdapter={AdapterDayjs}>
+    <DemoContainer name="SpecifiedTime" sx={{width:200}} components={['TimePicker']}>
         <TimePicker
             label="Time picker"
             onChange={(newValue) => {
-                filterApp(newValue); // Call filterApp with newValue
+                filterApp({target: {name: 'SpecifiedTime', value: newValue}}); // Call filterApp with event-like object
             }}
         />
     </DemoContainer>
@@ -127,9 +141,10 @@ const Filter = ({setDataList}) =>{
 
 <Autocomplete
     value={importance}
+    name="LevelOfImportance"
     onChange={(event, newValue) => {
         setImportance(newValue);
-        filterApp(newValue); // Call filterApp with newValue
+        filterApp({target: {name: 'LevelOfImportance', value: newValue}}); // Call filterApp with event-like object
     }}
     inputValue={inputImportanceValue}
     onInputChange={(event, newInputValue) => {
@@ -140,6 +155,7 @@ const Filter = ({setDataList}) =>{
     sx={{ width: 170 }}
     renderInput={(params) => <TextField {...params} label="Importance" />}
 />
+
 
 
 
