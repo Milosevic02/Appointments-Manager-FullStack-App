@@ -24,7 +24,7 @@ const Home = () =>{
                 This powerful web application helps you to manage your dates very easy
             </Typography>
             <Alert variant = "filled" severity="success">This is a success Alert.</Alert>
-            <Filter pb={3}/>
+            <Filter pb={3} setDataList={setDataList}/>
             <Table dataList={dataList} refreshApp={setRefreshData} />
             <New refreshApp={setRefreshData}/>
         </Box>
