@@ -11,8 +11,8 @@ import { activeId, entry } from "./Lib";
 
 const columns = [
     { field: 'id', headerName: '#', width: 70, align: "center" },
-    { field: 'title', headerName: 'Title', width: 130 },
-    { field: 'description', headerName: 'Description', width: 200 },
+    { field: 'title', headerName: 'Title', width: 150 },
+    { field: 'description', headerName: 'Description', width: 250 },
     {
         field: 'levelOfImportance',
         headerName: 'Importance',
@@ -33,7 +33,7 @@ const columns = [
                 
             );
         }
-    },    { field: 'date', headerName: 'Date', width: 170 },
+    },    { field: 'date', headerName: 'Date', width: 120 },
     { field: 'time', headerName: 'Time', width: 100, align: "center" },
     { field: 'address', headerName: 'Address', width: 200 },
     {
