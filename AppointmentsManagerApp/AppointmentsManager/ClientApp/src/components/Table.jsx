@@ -131,7 +131,7 @@ const Table = ({ dataList,refreshApp }) => {
         
         <div style={{ height: 400, width: '100%', paddingLeft: 10 }}>
             <DataGrid
-                rows={dataList.map(row => ({ ...row, onEditClick: setOpenEdit,onDeleteClick:setOpenDelete }))} // Pass setOpenEdit as onEditClick to each row
+                rows={dataList.map(row => ({ ...row, onEditClick:() => handlingEdit(row),onDeleteClick: () => handlingDelete(row.id) }))} // Pass setOpenEdit as onEditClick to each row
                 columns={columns}
                 getRowClassName={getRowClassName}
                 initialState={{
