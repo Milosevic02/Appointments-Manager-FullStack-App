@@ -201,6 +201,10 @@ namespace AppointmentsManager.Controllers
                 return NotFound("No appointment with the ID " + id);
             }
 
+            Appointment entry_ = await _context.Appointments.FirstOrDefaultAsync(e => e.ID == appointment.ID);
+            entry_.ModifiedDate = DateTime.Now;
+            entry_.Deleted = true;
+            await _context.SaveChangesAsync();
             return Ok("Appointment deleted successfully.");
         }
 
