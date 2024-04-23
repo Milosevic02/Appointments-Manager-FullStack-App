@@ -11,12 +11,11 @@ const StyledModal = styled(Modal)({
 })
 const Edit = ({openEdit,setOpenEdit,stateListener,refreshApp}) =>{
     const [done_, setDone_] = useState(false)
-    const [deleted, setDeleted] = useState(false)
+    const [deleted_, setDeleted_] = useState(false)
     const [importance, setImportance] = useState(0)
     const [data, setData] = useState({})
 
-
-    const editApp = (e) => {
+    const editApp =(e)=> {
         const name_ = e.target.name
         let v_ = e.target.value
 
@@ -27,7 +26,7 @@ const Edit = ({openEdit,setOpenEdit,stateListener,refreshApp}) =>{
 
         if(name_ === "deleted"){
             v_ = e.target.checked
-            setDeleted(v_)
+            setDeleted_(v_)
         }
 
         if(name_ === "date"){
@@ -41,6 +40,7 @@ const Edit = ({openEdit,setOpenEdit,stateListener,refreshApp}) =>{
 
         entry[name_] = v_
     }
+
 
     const updateApp = ()=>{
         updateAppointment(entry).then(r=>{
@@ -56,7 +56,7 @@ const Edit = ({openEdit,setOpenEdit,stateListener,refreshApp}) =>{
     useEffect(()=>{
         console.log("Edit-Component")
         setDone_(entry.done)
-        setDeleted(entry.deleted)
+        setDeleted_(entry.deleted)
         setImportance(entry.levelOfImportance)
         setData(entry)
 
@@ -72,13 +72,13 @@ const Edit = ({openEdit,setOpenEdit,stateListener,refreshApp}) =>{
                         <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px"}}>Title</Typography>
                         <input style={{width:"70%"}} type="text" id="Title_n" maxLength={150} name="title" defaultValue={data.title} onChange={editApp}/>
                         <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px"}}>Description</Typography>
-                        <textarea id="Description_n" maxLength={300} style={{maxHeight:"200px"}}  name="description" defaultValue={data.levelOfImportance} onChange={editApp} cols={102} rows={10}></textarea> <br />
+                        <textarea id="Description_n" maxLength={300} style={{maxHeight:"200px"}}  name="description" defaultValue={data.description} onChange={editApp} cols={102} rows={10}></textarea> <br />
                         <Stack direction={"row"} sx={{alignItems:"center", justifyContent:"space-around"}}>
                         
                             <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px"}}>Address:</Typography>
                             <input type="text" id="Address_n" name="address" defaultValue={data.address} onChange={editApp} style={{marginLeft:"5px", width:"600px",height:"25px"}} maxLength={100} />
                             <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px"}}>Importance:</Typography>
-                            <select name="levelOfImportance" id="LevelOfImportance_n" defaultValue={importance} onChange={editApp}>
+                            <select name="levelOfImportance" id="LevelOfImportance_n" value={importance} onChange={editApp}>
                                 <option value={5}>Very High</option>
                                 <option value={4}>High</option>
                                 <option value={3}>Medium</option>
@@ -90,13 +90,13 @@ const Edit = ({openEdit,setOpenEdit,stateListener,refreshApp}) =>{
                         </Stack>
                         <Stack direction={"row"} sx={{alignItems:"center", justifyContent:""}}>
                         <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px",mr:"5px"}}>Date:</Typography>
-                        <input type="date" id="Date_n" name="date" onChange={editApp} defaultValue={data.date}/>
+                        <input type="date" id="Date_n" name="date" onChange={editApp} defaultValue={defaultDate}/>
                         <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px", mr:"5px",ml:"10px"}}>Time:</Typography>
                         <input type="time" id="Time_n" name="time" onChange={editApp} defaultValue={data.time}/>
                         <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px", mr:"5px",ml:"10px"}}>Done:</Typography>
                         <input style={{"marginTop":"5px"}} type="checkbox" id="Done_e"  name="done" checked={done_} onChange={editApp}/>
                         <Typography sx={{fontWeight:"bold",mt:"10px", mb:"5px", mr:"5px",ml:"10px"}}>Deleted:</Typography>
-                        <input style={{"marginTop":"5px"}} type="checkbox" id="Deleted_e" name="deleted" checked={deleted} onChange={editApp}/>
+                        <input style={{"marginTop":"5px"}} type="checkbox" id="Deleted_e" name="deleted_" checked={deleted_} onChange={editApp}/>
 
                         </Stack>
                         <Stack direction={"row"} sx={{ml:"20px",mr:"20px",mt:"30px" ,alignItems:"center", justifyContent:"space-between"}}>
