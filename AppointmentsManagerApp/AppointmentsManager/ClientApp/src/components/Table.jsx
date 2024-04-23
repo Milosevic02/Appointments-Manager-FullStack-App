@@ -100,7 +100,7 @@ const ImportanceToString = (param) =>{
 
 
 
-const Table = ({ dataList }) => {
+const Table = ({ dataList,refreshApp }) => {
     const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
     const [stateListener, setStateListener] = useState(0);
@@ -141,7 +141,7 @@ const Table = ({ dataList }) => {
                 }}
                 pageSizeOptions={[5, 10]}
             />
-            <Edit stateListener = {stateListener} openEdit = {openEdit} setOpenEdit = {setOpenEdit}/>
+            <Edit refreshApp={refreshApp} stateListener = {stateListener} openEdit = {openEdit} setOpenEdit = {setOpenEdit}/>
             <Delete stateListener = {stateListener} openDelete = {openDelete} setOpenDelete = {setOpenDelete}/>
         </div>
         
