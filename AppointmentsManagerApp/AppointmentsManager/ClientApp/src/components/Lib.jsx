@@ -46,6 +46,24 @@ export async function getDefault(){
     
 }
 
+export async function getAppointments(filter_){
+    const res = await fetch(url + "/filters",{
+        method: "POST",
+        body: JSON.stringify(filter_),
+        headers: {
+            "content-type": "application/json"
+        }
+    })
+
+    if(!res.ok){
+        console.log("It sucked at gettings appointments with filters: ", res)
+        //ALERT("Something went wrong, please clear filters and try again.")
+        return []
+    }
+
+    return await res.json()
+}
+
 export async function postAppointment(newApp){
     const res = await fetch(url,{
         method:"POST",
