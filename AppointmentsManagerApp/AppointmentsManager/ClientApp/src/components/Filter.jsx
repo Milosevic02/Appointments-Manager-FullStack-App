@@ -6,7 +6,70 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from "@mui/x-date-pickers";
 import ClearIcon from '@mui/icons-material/Clear';
-const Filter = () =>{
+import { filter, getAppointments } from "./Lib";
+const Filter = ({setDataList}) =>{
+    const filterApp = (e) => {
+        let name_ = e.target.name;
+        let v_ = e.target.value;
+    
+        if (name_ === "All" || name_ === "Done" || name_ === "Deleted") {
+          v_ = e.target.checked;
+          filter[name_] = v_;
+        }
+    
+        if (name_ === "period") {
+          // 1 = today, 2 = this week, 3 = last week
+          let sd_ = new Date(), ed_ = new Date();
+          const dayNum = sd_.getDay();
+    
+          if (v_ === "1") {
+            sd_.setDate(dayNum - 1)
+          }
+    
+          if (v_ === "2") {
+            let startDaysInSec = (dayNum - 1) * 24 * 60 * 60 * 1000;
+            let endDaysInSec = (7 - dayNum) * 24 * 60 * 60 * 1000;
+    
+            sd_ = new Date(Date.now() - startDaysInSec);
+            ed_ = new Date(Date.now() + endDaysInSec);
+          }
+    
+          if (v_ === "3") {
+            let startDaysInSec = dayNum * 24 * 60 * 60 * 1000;
+            let endDaysInSec = (6 + dayNum) * 24 * 60 * 60 * 1000;
+    
+            ed_ = new Date(Date.now() - startDaysInSec);
+            sd_ = new Date(Date.now() - endDaysInSec);
+          }
+    
+          filter.StartDate = v_ === '4' ? null : sd_;
+          filter.EndDate = v_ === '4' ? null : ed_;
+          filter.SpecifiedDate = null
+        }
+    
+        if (name_ === "SpecifiedDate") {
+          filter.SpecifiedDate = new Date(v_);
+          filter.StartDate = null
+          filter.EndDate = null
+        }
+    
+        if (name_ === "SpecifiedTime") {
+          filter.SpecifiedTime = v_;
+        }
+    
+        if (name_ === "LevelOfImportance") {
+          filter.LevelOfImportance = Number(v_) === 9 ? null : Number(v_);
+        }
+    
+        // fetch data with filter
+        getAppointments(filter).then(r => {
+          if (r.length < 1) {
+            console.log("Filter result is empty!")
+            //ALERT
+          }
+          setDataList(r)
+        }).catch(e => console.log("Error getting data on filter: ", e))
+      }
     const periods = ["Default","Today","This Week","Last Week"]
     const importances = ["All","Very High","High","Medium","Normal","Low","Very Low"]
     const [value, setValue] = React.useState(periods[0]);
@@ -20,49 +83,64 @@ const Filter = () =>{
                 height:"23px"
             }}> Clear</Button>
             <FormGroup row>
-                <FormControlLabel value={"all"} control={<Checkbox/>}labelPlacement="top" label="All" />
-                <FormControlLabel value={"done"} control={<Checkbox/>}labelPlacement="top" label="Done" />
-                <FormControlLabel value={"delete"} control={<Checkbox/>}labelPlacement="top" label="Deleted" />
+                <FormControlLabel onChange={filterApp} value={"all"} control={<Checkbox/>}labelPlacement="top" label="All"  />
+                <FormControlLabel onChange={filterApp} value={"done"} control={<Checkbox/>}labelPlacement="top" label="Done" />
+                <FormControlLabel onChange={filterApp} value={"delete"} control={<Checkbox/>}labelPlacement="top" label="Deleted" />
             </FormGroup>
             <Autocomplete
-                value={value}
-                onChange={(event, newValue) => {
-                setValue(newValue);
-                }}
-                inputValue={inputValue}
-                onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-                }}
-                id="period"
-                options={periods}
-                sx={{ width: 170 }}
-                renderInput={(params) => <TextField  {...params} label="Period" />}
-            />
-            <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                <DemoContainer sx={{width:200}} components={['DatePicker']}>
-                    <DatePicker  label="Date picker" />
-                </DemoContainer>
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer sx={{width:200}} components={['TimePicker']}>
-                    <TimePicker label="Time picker" />
-                </DemoContainer>
-            </LocalizationProvider>
-            
-            <Autocomplete
-                value={importance}
-                onChange={(event, newValue) => {
-                setImportance(newValue);
-                }}
-                inputValue={inputImportanceValue}
-                onInputChange={(event, newInputValue) => {
-                setInputImportanceValue(newInputValue);
-                }}
-                id="importance"
-                options={importances}
-                sx={{ width: 170 }}
-                renderInput={(params) => <TextField {...params} label="Importance" />}
-            />
+    value={value}
+    onChange={(event, newValue) => {
+        setValue(newValue);
+        filterApp(newValue); // Call filterApp with newValue
+    }}
+    inputValue={inputValue}
+    onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+    }}
+    id="period"
+    options={periods}
+    sx={{ width: 170 }}
+    renderInput={(params) => <TextField  {...params} label="Period" />}
+/>
+
+<LocalizationProvider  dateAdapter={AdapterDayjs}>
+    <DemoContainer sx={{width:200}} components={['DatePicker']}>
+        <DatePicker
+            label="Date picker"
+            onChange={(newValue) => {
+                filterApp(newValue); // Call filterApp with newValue
+            }}
+        />
+    </DemoContainer>
+</LocalizationProvider>
+
+<LocalizationProvider dateAdapter={AdapterDayjs}>
+    <DemoContainer sx={{width:200}} components={['TimePicker']}>
+        <TimePicker
+            label="Time picker"
+            onChange={(newValue) => {
+                filterApp(newValue); // Call filterApp with newValue
+            }}
+        />
+    </DemoContainer>
+</LocalizationProvider>
+
+<Autocomplete
+    value={importance}
+    onChange={(event, newValue) => {
+        setImportance(newValue);
+        filterApp(newValue); // Call filterApp with newValue
+    }}
+    inputValue={inputImportanceValue}
+    onInputChange={(event, newInputValue) => {
+        setInputImportanceValue(newInputValue);
+    }}
+    id="importance"
+    options={importances}
+    sx={{ width: 170 }}
+    renderInput={(params) => <TextField {...params} label="Importance" />}
+/>
+
 
 
 
