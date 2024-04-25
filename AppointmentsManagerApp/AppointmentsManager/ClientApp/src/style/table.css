@@ -1,0 +1,17 @@
+.done-row {
+    background-color: lightgreen;
+    transition: background-color 0.3s; /* Add transition for smooth color change */
+}
+
+.done-row:hover {
+    background-color: #55ee55 !important; /* Slightly darker shade of green */
+}
+
+.deleted-row {
+    background-color: lightcoral;
+    transition: background-color 0.3s; /* Add transition for smooth color change */
+}
+
+.deleted-row:hover {
+    background-color: #FF6347 !important; /* Slightly darker shade of coral */
+}
